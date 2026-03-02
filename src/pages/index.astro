@@ -1,49 +1,670 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
-import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+
+const allPosts = await getCollection('blog');
+
+const LEVEL_META: Record<string, { color: string; label: string; desc: string }> = {
+  A1: { color: 'var(--level-a1, #3b82f6)', label: 'A1 — Principiante',    desc: 'Vocabulario y frases básicas' },
+  A2: { color: 'var(--level-a2, #10b981)', label: 'A2 — Elemental',       desc: 'Comunicación cotidiana simple' },
+  B1: { color: 'var(--level-b1, #f59e0b)', label: 'B1 — Intermedio',      desc: 'Temas familiares y rutinarios' },
+  B2: { color: 'var(--level-b2, #f97316)', label: 'B2 — Intermedio alto', desc: 'Textos complejos y abstractos' },
+  C1: { color: 'var(--level-c1, #ef4444)', label: 'C1 — Avanzado',        desc: 'Uso flexible y eficaz' },
+  C2: { color: 'var(--level-c2, #8b5cf6)', label: 'C2 — Maestría',        desc: 'Comprensión plena del idioma' },
+};
+
+type Post = typeof allPosts[0];
+type LevelGroup = { intro: Post | null; subs: Record<string, Post[]> };
+const grouped: Record<string, LevelGroup> = {};
+
+for (const post of allPosts) {
+  const level    = post.data.level    || 'Sin nivel';
+  const sublevel = post.data.sublevel || level;
+  if (!grouped[level]) grouped[level] = { intro: null, subs: {} };
+  if (sublevel === level) {
+    grouped[level].intro = post;
+  } else {
+    if (!grouped[level].subs[sublevel]) grouped[level].subs[sublevel] = [];
+    grouped[level].subs[sublevel].push(post);
+  }
+}
+
+for (const lvl of Object.values(grouped)) {
+  for (const key of Object.keys(lvl.subs)) {
+    lvl.subs[key].sort((a, b) => a.data.pubDate.valueOf() - b.data.pubDate.valueOf());
+  }
+}
+
+const levels     = Object.keys(grouped).sort();
+const categories = [...new Set(allPosts.map(p => p.data.category).filter(Boolean))] as string[];
+const totalPosts = allPosts.length;
 ---
 
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
-	<body>
-		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This template
-				serves as a lightweight, minimally-styled starting point for anyone looking to build a personal
-				website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your
-				<code>astro.config.mjs</code> file. You can customize your setup with
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like Tailwind,
-				React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>Edit this page in <code>src/pages/index.astro</code></li>
-				<li>Edit the site header items in <code>src/components/Header.astro</code></li>
-				<li>Add your name to the footer in <code>src/components/Footer.astro</code></li>
-				<li>Check out the included blog posts in <code>src/content/blog/</code></li>
-				<li>Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code></li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to
-				<a href="https://docs.astro.build/">read the docs</a>
-				or <a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a>
-				by <a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
-		</main>
-		<Footer />
-	</body>
+<html lang="es">
+  <head>
+    <BaseHead title={`Lecciones · ${SITE_TITLE}`} description={SITE_DESCRIPTION} />
+  </head>
+  <body>
+    <Header />
+    <main class="wrapper">
+
+      <header class="page-header">
+        <div class="header-content">
+          <h1 class="page-title">Explora las Lecciones</h1>
+          <p class="page-description">Sigue un flujo estructurado desde los conceptos básicos hasta el dominio absoluto del idioma.</p>
+        </div>
+        
+        <div class="stats-panel">
+          <div class="stat-item">
+            <span class="stat-value">{totalPosts}</span>
+            <span class="stat-label">Lecciones</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{levels.length}</span>
+            <span class="stat-label">Niveles</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-value">{categories.length}</span>
+            <span class="stat-label">Categorías</span>
+          </div>
+        </div>
+      </header>
+
+      <section class="filters-section">
+        <div class="search-box">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="18" height="18" aria-hidden="true" class="search-icon">
+            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+          </svg>
+          <input id="search-input" type="search" placeholder="Buscar temas, vocabulario, gramática..." autocomplete="off" />
+          <button id="search-clear" class="btn-clear hidden" aria-label="Limpiar búsqueda">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" width="16" height="16">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <div class="categories-list">
+          <button class="cat-pill active" data-cat="Todos">Todos</button>
+          {categories.map(cat => (
+            <button class="cat-pill" data-cat={cat}>{cat}</button>
+          ))}
+        </div>
+      </section>
+
+      <div id="result-hint" class="result-hint hidden" role="status" aria-live="polite">
+        <span id="result-text"></span>
+        <button id="clear-all" class="text-link">Borrar filtros</button>
+      </div>
+
+      <div id="levels-container" class="levels-container">
+        {levels.map(lv => {
+          const data    = grouped[lv];
+          const meta    = LEVEL_META[lv] ?? { color: 'var(--text-muted)', label: lv, desc: '' };
+          const subKeys = Object.keys(data.subs).sort();
+          const total   = (data.intro ? 1 : 0) + subKeys.reduce((s, k) => s + data.subs[k].length, 0);
+
+          return (
+            <section class="level-block" id={`level-${lv}`} data-level={lv}>
+              
+              <div class="level-divider" style={`--lc:${meta.color}`}>
+                <div class="level-divider__main">
+                  <h2 class="level-title">{meta.label}</h2>
+                  <span class="level-desc">{meta.desc}</span>
+                </div>
+                <div class="level-badge">
+                  <span class="badge-tag">{lv}</span>
+                  <span class="badge-count">{total} lecciones</span>
+                </div>
+              </div>
+
+              <div class="level-content">
+                {/* Intro Post */}
+                {data.intro && (() => {
+                  const post = data.intro;
+                  return (
+                    <a href={`/blog/${post.id}/`} class="post-card intro-card"
+                      data-cat={post.data.category} data-title={post.data.title?.toLowerCase()}
+                      data-desc={post.data.description?.toLowerCase()} style={`--lc:${meta.color}`}>
+                      <div class="card-header">
+                        <span class="card-badge" style={`background-color: var(--lc); color: #fff;`}>Introducción {lv}</span>
+                        {post.data.category && <span class="card-category">{post.data.category}</span>}
+                      </div>
+                      <h3 class="card-title">{post.data.title}</h3>
+                      {post.data.description && <p class="card-desc">{post.data.description}</p>}
+                    </a>
+                  );
+                })()}
+
+                {/* Subniveles y Grid de Tarjetas */}
+                {subKeys.length > 0 && (
+                  <div class="subgroups-wrapper">
+                    {subKeys.map(sub => (
+                      <div class="sub-group">
+                        <h4 class="sub-group__title" style={`color: var(--lc)`}>{sub}</h4>
+                        <div class="posts-grid">
+                          {data.subs[sub].map(post => (
+                            <a href={`/blog/${post.id}/`} class="post-card"
+                              data-cat={post.data.category} data-title={post.data.title?.toLowerCase()}
+                              data-desc={post.data.description?.toLowerCase()} style={`--lc:${meta.color}`}>
+                              <div class="card-content">
+                                <h4 class="card-title">{post.data.title}</h4>
+                                {post.data.description && <p class="card-desc">{post.data.description}</p>}
+                              </div>
+                              <div class="card-footer">
+                                {post.data.category && <span class="card-category">{post.data.category}</span>}
+                                <span class="card-date"><FormattedDate date={post.data.pubDate} /></span>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </section>
+          );
+        })}
+      </div>
+
+      <div id="empty-state" class="empty-state hidden" role="alert">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="48" height="48">
+          <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+        </svg>
+        <h3>No encontramos lecciones</h3>
+        <p>Prueba con otra palabra clave o limpia los filtros.</p>
+        <button id="empty-clear" class="btn-primary">Ver todas las lecciones</button>
+      </div>
+
+    </main>
+    <Footer />
+  </body>
 </html>
+
+<script>
+  // Lógica Vanilla JS intacta pero optimizada para los nuevos selectores
+  const searchInput   = document.getElementById('search-input')  as HTMLInputElement;
+  const searchClear   = document.getElementById('search-clear')!;
+  const catBtns       = document.querySelectorAll<HTMLButtonElement>('.cat-pill');
+  const resultHint    = document.getElementById('result-hint')!;
+  const resultText    = document.getElementById('result-text')!;
+  const clearAllBtn   = document.getElementById('clear-all')!;
+  const emptyClearBtn = document.getElementById('empty-clear');
+  const emptyState    = document.getElementById('empty-state')!;
+
+  let query     = '';
+  let activeCat = 'Todos';
+
+  function applyFilter() {
+    const q         = query.trim().toLowerCase();
+    const cards     = document.querySelectorAll<HTMLElement>('.post-card');
+    const levels    = document.querySelectorAll<HTMLElement>('.level-block');
+    const subGroups = document.querySelectorAll<HTMLElement>('.sub-group');
+    let visible = 0;
+
+    cards.forEach(card => {
+      const title    = card.dataset.title ?? '';
+      const desc     = card.dataset.desc  ?? '';
+      const cat      = card.dataset.cat   ?? '';
+      const lvl      = card.closest<HTMLElement>('.level-block')?.dataset.level ?? '';
+
+      const matchQ = !q || title.includes(q) || desc.includes(q) || lvl.toLowerCase().includes(q) || cat.toLowerCase().includes(q);
+      const matchC = activeCat === 'Todos' || cat === activeCat;
+      const show   = matchQ && matchC;
+
+      card.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+
+    subGroups.forEach(sg => {
+      const any = [...sg.querySelectorAll<HTMLElement>('.post-card')].some(c => c.style.display !== 'none');
+      sg.style.display = any ? '' : 'none';
+    });
+
+    levels.forEach(lv => {
+      const any = [...lv.querySelectorAll<HTMLElement>('.post-card')].some(c => c.style.display !== 'none');
+      lv.style.display = any ? '' : 'none';
+    });
+
+    const filtering = !!(q || activeCat !== 'Todos');
+    resultHint.classList.toggle('hidden', !filtering);
+    emptyState.classList.toggle('hidden', !(filtering && visible === 0));
+    searchClear.classList.toggle('hidden', !q);
+
+    if (filtering) {
+      let txt = `Mostrando <strong>${visible}</strong> resultado${visible !== 1 ? 's' : ''}`;
+      if (q) txt += ` para "<strong>${q}</strong>"`;
+      if (activeCat !== 'Todos') txt += ` en la categoría <strong>${activeCat}</strong>`;
+      resultText.innerHTML = txt;
+    }
+  }
+
+  function clearFilters() {
+    searchInput.value = '';
+    query = '';
+    activeCat = 'Todos';
+    catBtns.forEach(b => b.classList.toggle('active', b.dataset.cat === 'Todos'));
+    applyFilter();
+  }
+
+  searchInput.addEventListener('input', e => {
+    query = (e.target as HTMLInputElement).value;
+    applyFilter();
+  });
+  
+  searchClear.addEventListener('click',  () => { searchInput.value = ''; query = ''; applyFilter(); });
+  clearAllBtn.addEventListener('click',  clearFilters);
+  emptyClearBtn?.addEventListener('click', clearFilters);
+
+  catBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      catBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeCat = btn.dataset.cat ?? 'Todos';
+      applyFilter();
+    });
+  });
+</script>
+
+<style>
+  /* Variables base asumidas del tema de Astro, asegurando compatibilidad */
+  :root {
+    --bg-main: var(--bg-body, #ffffff);
+    --bg-card: var(--bg-surface, #f8fafc);
+    --bg-hover: var(--bg-surface-hover, #f1f5f9);
+    --border-light: var(--border, #e2e8f0);
+    --text-main: var(--text-heading, #0f172a);
+    --text-sub: var(--text-muted, #64748b);
+    --accent-color: var(--accent, #3b82f6);
+    --radius-md: 12px;
+    --radius-sm: 8px;
+  }
+
+  .wrapper {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  /* Header Minimalista */
+  .page-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (min-width: 768px) {
+    .page-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+  }
+
+  .eyebrow {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0.5rem 0;
+    line-height: 1.2;
+  }
+
+  .page-description {
+    color: var(--text-sub);
+    max-width: 500px;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  /* Estadísticas rediseñadas */
+  .stats-panel {
+    display: flex;
+    gap: 1.5rem;
+    background: var(--bg-card);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-light);
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--text-sub);
+    margin-top: 0.25rem;
+  }
+
+  /* Filtros Integrados */
+  .filters-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .search-box {
+    display: flex;
+    align-items: center;
+    background: var(--bg-main);
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .search-box:focus-within {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent-color) 15%, transparent);
+  }
+
+  .search-icon {
+    color: var(--text-sub);
+    margin-right: 0.75rem;
+  }
+
+  #search-input {
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-main);
+  }
+
+  #search-input::placeholder {
+    color: var(--text-sub);
+  }
+
+  .btn-clear {
+    background: none;
+    border: none;
+    color: var(--text-sub);
+    cursor: pointer;
+    padding: 0.25rem;
+    border-radius: 50%;
+  }
+
+  .btn-clear:hover {
+    background: var(--bg-hover);
+    color: var(--text-main);
+  }
+
+  .categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .cat-pill {
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    border: 1px solid var(--border-light);
+    background: var(--bg-card);
+    color: var(--text-sub);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cat-pill:hover {
+    border-color: var(--accent-color);
+    color: var(--accent-color);
+  }
+
+  .cat-pill.active {
+    background: var(--accent-color);
+    border-color: var(--accent-color);
+    color: white;
+  }
+
+  /* Resultados */
+  .result-hint {
+    background: color-mix(in srgb, var(--accent-color) 10%, transparent);
+    color: var(--text-main);
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .text-link {
+    background: none;
+    border: none;
+    color: var(--accent-color);
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.85rem;
+  }
+
+  .text-link:hover {
+    text-decoration: underline;
+  }
+
+  /* Layout de Niveles */
+  .levels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .level-divider {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 3px solid var(--lc);
+  }
+
+  .level-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--text-main);
+    margin: 0;
+  }
+
+  .level-desc {
+    font-size: 0.9rem;
+    color: var(--text-sub);
+  }
+
+  .level-badge {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.25rem;
+  }
+
+  .badge-tag {
+    background: var(--lc);
+    color: white;
+    font-weight: 700;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .badge-count {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+    font-weight: 500;
+  }
+
+  /* Tarjetas (Grid System) */
+  .level-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .sub-group__title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin: 0 0 1rem 0;
+    padding-left: 0.5rem;
+    border-left: 3px solid var(--lc);
+  }
+
+  .post-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: 1.25rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .post-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
+    border-color: var(--lc);
+  }
+
+  .intro-card {
+    background: color-mix(in srgb, var(--lc) 4%, var(--bg-card));
+    border-left: 4px solid var(--lc);
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-content {
+    flex: 1;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin: 0 0 0.5rem 0;
+    line-height: 1.3;
+  }
+
+  .card-desc {
+    font-size: 0.85rem;
+    color: var(--text-sub);
+    margin: 0;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border-light);
+  }
+
+  .card-category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-sub);
+    background: var(--bg-main);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--border-light);
+  }
+
+  .card-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  .card-date {
+    font-size: 0.75rem;
+    color: var(--text-sub);
+  }
+
+  /* Estado Vacío */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-md);
+    border: 1px dashed var(--border-light);
+    color: var(--text-sub);
+  }
+
+  .empty-state svg {
+    margin-bottom: 1rem;
+    color: var(--text-sub);
+    opacity: 0.5;
+  }
+
+  .empty-state h3 {
+    color: var(--text-main);
+    margin: 0 0 0.5rem 0;
+  }
+
+  .btn-primary {
+    margin-top: 1.5rem;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+  }
+
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+</style>
