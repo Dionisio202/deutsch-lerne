@@ -1,6 +1,6 @@
 ---
-title: 'A1 - Los Números'
-description: 'Números del 0 al 1000 en alemán con reglas de formación'
+title: 'A1 - Los Números y los Años'
+description: 'Números del 0 al 1000 en alemán y reglas para decir los años'
 pubDate: '2026-03-02'
 level: 'A1'
 sublevel: 'A1.1'
@@ -70,6 +70,32 @@ category: 'Vocabulario'
 | 200 | zweihundert |
 | 1000 | tausend |
 | 1.000.000 | eine Million |
+
+## Cómo decir los años (Jahreszahlen)
+
+En alemán, la forma de leer un año cambia por completo si ocurrió antes del año 2000 o después.
+
+### 1. Años hasta 1999 (Se leen en cientos)
+**Regla:** Se divide el año a la mitad. Se leen las primeras dos cifras + **hundert** + las últimas dos cifras.
+
+| Año | Alemán | Lógica |
+| :--- | :--- | :--- |
+| **1987** | **neunzehnhundert**siebenundachtzig | 19 (neunzehn) + hundert + 87 (siebenundachtzig) |
+| **1850** | **achtzehnhundert**fünfzig | 18 (achtzehn) + hundert + 50 (fünfzig) |
+| **1999** | **neunzehnhundert**neunundneunzig | 19 (neunzehn) + hundert + 99 (neunundneunzig) |
+
+### 2. Años a partir del 2000 (Se leen como números normales)
+**Regla:** Ya no se usa "hundert". Se leen exactamente igual que un número normal de miles.
+
+| Año | Alemán | Lógica |
+| :--- | :--- | :--- |
+| **2025** | **zweitausend**fünfundzwanzig | 2000 (zweitausend) + 25 (fünfundzwanzig) |
+| **2008** | **zweitausend**acht | 2000 (zweitausend) + 8 (acht) |
+| **2020** | **zweitausend**zwanzig | 2000 (zweitausend) + 20 (zwanzig) |
+
+> ⚠️ **REGLA DE ORO DE LOS AÑOS:** En español decimos "Nací **en** 1995". En alemán **NO se usa preposición** antes del año. 
+> * **Correcto:** *Ich bin 1995 geboren.*
+> * **Incorrecto:** *~~Ich bin in 1995 geboren.~~*
 
 ## ⚠️ Diferencia con español
 En alemán los números se dicen al **revés**: primero la unidad, luego la decena.
