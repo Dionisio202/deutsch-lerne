@@ -70,6 +70,15 @@ category: 'Vocabulario'
 | 200 | zweihundert |
 | 1000 | tausend |
 | 1.000.000 | eine Million |
+### ¡Ejemplo de un número largo!
+Para ver cómo funciona con un número bastante grande, tomemos el **147.879**. En alemán, los números largos se escriben como una sola palabra gigante. Para no asustarnos, lo mejor es dividirlo en bloques de miles y cientos, tal como lo leemos mentalmente:
+
+1. **147.000:** einhundertsiebenundvierzigtausend *(147 + mil)*
+2. **800:** achthundert *(8 + cientos)*
+3. **79:** neunundsiebzig *(9 y 70)*
+
+Si unimos todas las piezas sin espacios, nos queda esta súper palabra:
+**einhundertsiebenundvierzigtausendachthundertneunundsiebzig**
 
 ## Cómo decir los años (Jahreszahlen)
 
