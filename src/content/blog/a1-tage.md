@@ -1,6 +1,6 @@
 ---
-title: 'A1 - Días de la semana y Horarios'
-description: 'Vocabulario estructurado: Wochentage, Wochenende y expresiones de tiempo.'
+title: 'A1 - Días, Meses, Estaciones y Horarios'
+description: 'Vocabulario estructurado: Wochentage, Monate, Jahreszeiten y expresiones de tiempo.'
 pubDate: '2026-03-02'
 level: 'A1'
 sublevel: 'A1.1'
@@ -37,7 +37,78 @@ category: 'Vocabulario'
 
 ---
 
-## 2. Momentos del Día (Tageszeiten)
+## 2. Los Meses (Die Monate)
+
+> 💡 **Regla de oro:** Igual que los días, **todos los meses son masculinos** (llevan *der*). Para decir "en enero", se usa la preposición **im** (contracción de *in dem*). Ej: *im Januar*.
+
+<div class="llave-container">
+  <div class="llave-root" style="color: #3b82f6;">Die Monate</div>
+  <div class="llave-bracket" style="border-color: #3b82f6;">
+    <div class="llave-node">
+      <h4 style="color: #3b82f6; margin-top: 0;">Primer semestre</h4>
+      <ul>
+        <li><strong>der</strong> Januar (Enero)</li>
+        <li><strong>der</strong> Februar (Febrero)</li>
+        <li><strong>der</strong> März (Marzo)</li>
+        <li><strong>der</strong> April (Abril)</li>
+        <li><strong>der</strong> Mai (Mayo)</li>
+        <li><strong>der</strong> Juni (Junio)</li>
+      </ul>
+    </div>
+    <div class="llave-node">
+      <h4 style="color: #3b82f6; margin-top: 0;">Segundo semestre</h4>
+      <ul>
+        <li><strong>der</strong> Juli (Julio)</li>
+        <li><strong>der</strong> August (Agosto)</li>
+        <li><strong>der</strong> September (Septiembre)</li>
+        <li><strong>der</strong> Oktober (Octubre)</li>
+        <li><strong>der</strong> November (Noviembre)</li>
+        <li><strong>der</strong> Dezember (Diciembre)</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+> ⚠️ **Cuidado con la pronunciación:** *Juni* y *Juli* suenan muy parecido al oído (especialmente al teléfono). Para evitar confusiones, los alemanes a menudo dicen **"Juno"** (en lugar de Juni) y **"Julei"** (en lugar de Juli) cuando hablan de fechas importantes.
+
+**Ejemplos de uso:**
+- *Mein Geburtstag ist **im Mai**.* (Mi cumpleaños es **en mayo**.)
+- *Ich fahre **im August** nach Deutschland.* (Voy a Alemania **en agosto**.)
+
+---
+
+## 3. Las Estaciones (Die Jahreszeiten)
+
+> 💡 **Hack mental:** Las cuatro estaciones son **masculinas** (der). Una sola regla, sin excepciones. Para decir "en verano" se usa **im** igual que con los meses (Ej: *im Sommer*).
+
+<div class="llave-container">
+  <div class="llave-root" style="color: #10b981;">Jahreszeiten</div>
+  <div class="llave-bracket" style="border-color: #10b981;">
+    <div class="llave-node">
+      <h4 style="color: #10b981; margin-top: 0;">Estaciones cálidas</h4>
+      <ul>
+        <li><strong>der</strong> Frühling (Primavera) → <em>März, April, Mai</em></li>
+        <li><strong>der</strong> Sommer (Verano) → <em>Juni, Juli, August</em></li>
+      </ul>
+    </div>
+    <div class="llave-node">
+      <h4 style="color: #10b981; margin-top: 0;">Estaciones frías</h4>
+      <ul>
+        <li><strong>der</strong> Herbst (Otoño) → <em>September, Oktober, November</em></li>
+        <li><strong>der</strong> Winter (Invierno) → <em>Dezember, Januar, Februar</em></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+**Ejemplos de uso:**
+- *Im Sommer ist es heiß.* (En verano hace calor.)
+- *Im Winter schneit es in Deutschland.* (En invierno nieva en Alemania.)
+- *Welche Jahreszeit magst du?* (¿Qué estación te gusta?)
+
+---
+
+## 4. Momentos del Día (Tageszeiten)
 
 Aquí está el "hack" más importante del alemán para los horarios: si le agregas una **"s"** minúscula al final del momento del día, deja de ser un sustantivo y se convierte en un **hábito o rutina**. 
 
@@ -71,7 +142,7 @@ Aquí está el "hack" más importante del alemán para los horarios: si le agreg
 
 ---
 
-## 3. Frases Clave de Tiempo (Estructuras de Supervivencia)
+## 5. Frases Clave de Tiempo (Estructuras de Supervivencia)
 
 Para hablar de tus horarios de trabajo, universidad o tiempo libre, agrupa estas frases en tu cabeza como bloques de Lego que puedes combinar.
 
@@ -96,6 +167,19 @@ Para hablar de tus horarios de trabajo, universidad o tiempo libre, agrupa estas
     </div>
   </div>
 </div>
+
+---
+
+## 6. Resumen: cuándo usar `am` vs `im`
+
+Esta es una pregunta que confunde mucho. La regla es simple:
+
+| Preposición | Cuándo usar | Ejemplos |
+|:---:|:---|:---|
+| **am** | Días de la semana + partes del día (excepto Nacht) | *am Montag, am Wochenende, am Morgen* |
+| **im** | Meses + estaciones del año | *im Januar, im Sommer, im Winter* |
+| **um** | Horas exactas | *um 8 Uhr, um 14:30* |
+| **in der** | Solo con *Nacht* (femenino) | *in der Nacht* |
 
 <style>
   /* --- ESTILOS PARA EL DIAGRAMA DE LLAVES --- */

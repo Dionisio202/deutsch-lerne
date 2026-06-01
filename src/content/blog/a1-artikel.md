@@ -49,6 +49,11 @@ El alemán sí tiene lógica. El género de una palabra se puede deducir en un 8
         <li><strong>...or:</strong> <span style="color: #3b82f6;">der</span> Motor, <span style="color: #3b82f6;">der</span> Reaktor.</li>
         <li><strong>...us:</strong> <span style="color: #3b82f6;">der</span> Optimismus, <span style="color: #3b82f6;">der</span> Rhythmus.</li>
       </ul>
+      <p style="margin-top: 8px; font-size: 14px; color: #374151;">
+  <strong>Cómo me lo memoricé:</strong> 
+  <span style="color: #2563eb; font-weight: 600;">ling-er-or-us</span> = casi siempre 
+  <span style="color: #3b82f6; font-weight: 600;">der</span>.
+</p>
     </div>
   </div>
 </div>
@@ -69,6 +74,11 @@ El alemán sí tiene lógica. El género de una palabra se puede deducir en un 8
         <li><strong>...ei / ...heit / ...schaft / ...ung:</strong> <span style="color: #ef4444;">die</span> Putzerei, <span style="color: #ef4444;">die</span> Freiheit, <span style="color: #ef4444;">die</span> Freundschaft, <span style="color: #ef4444;">die</span> Zeitung.</li>
         <li><strong>...tät / ...ik / ...ur / ...ion (Palabras internacionales):</strong> <span style="color: #ef4444;">die</span> Universität, <span style="color: #ef4444;">die</span> Musik, <span style="color: #ef4444;">die</span> Kultur, <span style="color: #ef4444;">die</span> Religion.</li>
       </ul>
+      <p style="margin-top: 8px; font-size: 14px; color: #374151;">
+  <strong>Cómo me lo memoricé:</strong> 
+  <span style="color: #2563eb; font-weight: 600;">ei-schaft-ung-heit-e</span> = casi siempre 
+  <span style="color: #ef4444; font-weight: 600;">die</span>.
+</p>
     </div>
   </div>
 </div>
@@ -89,9 +99,88 @@ El alemán sí tiene lógica. El género de una palabra se puede deducir en un 8
         <li><strong>...ment / ...nis / ...um / ...tum:</strong> <span style="color: #10b981;">das</span> Dokument, <span style="color: #10b981;">das</span> Zeugnis, <span style="color: #10b981;">das</span> Zentrum, <span style="color: #10b981;">das</span> Bürgertum.</li>
         <li><strong>...o:</strong> <span style="color: #10b981;">das</span> Kilo.</li>
       </ul>
+        <p style="margin-top: 8px; font-size: 14px; color: #374151;">
+  <strong>Cómo me lo memoricé:</strong> 
+  <span style="color: #2563eb; font-weight: 600;">nis-ment-um-tum-o</span> = casi siempre 
+  <span style="color: #10b981; font-weight: 600;">das</span>.
+</p>
     </div>
   </div>
 </div>
+
+---
+
+## 4. ¿Cuándo usar `der/die/das` vs `ein/eine`?
+
+Esta es la pregunta que nadie explica bien. La diferencia **no es aleatoria** — sigue una lógica muy clara que también existe en español (el/un), pero en alemán es más estricta.
+
+### 4.1. El artículo definido (`der/die/das`) — "el / la"
+
+Se usa cuando **el hablante y el oyente ya saben de qué cosa específica se habla.**
+
+**Ya se mencionó antes:**
+
+> Ich sehe einen Hund. **Der Hund** ist groß.  
+> *(Veo un perro. **El perro** es grande.)*
+
+**Hay solo uno en el contexto / es único:**
+
+> **Die Sonne** scheint.  
+> *(**El sol** brilla.)*
+>
+> **Der Lehrer** kommt.  
+> *(**El profesor** viene. — todos saben quién es.)*
+
+**Se especifica cuál exactamente:**
+
+> Das ist **das Buch** von Anna.  
+> *(Ese es **el libro** de Anna.)*
+
+---
+
+### 4.2. El artículo indefinido (`ein/eine/ein`) — "un / una"
+
+Se usa cuando **se menciona algo por primera vez** o **no importa cuál específicamente.**
+
+**Primera mención:**
+
+> Ich habe **einen Bruder**.  
+> *(Tengo **un** hermano.)*
+>
+> Das ist **eine Schule**.  
+> *(Eso es **una** escuela.)*
+
+**Cualquiera del grupo sirve, no uno específico:**
+
+> Ich brauche **einen Stift**.  
+> *(Necesito **un** bolígrafo. — cualquiera sirve.)*
+
+---
+
+### 4.3. El artículo cero (`—`) — sin artículo
+
+En alemán hay casos donde **no se usa ningún artículo**. Esto no existe igual en español, así que toca memorizarlo.
+
+| Situación | Ejemplo |
+|:---|:---|
+| **Profesiones** con `sein` | Ich bin **Lehrer**. *(Soy profesor.)* |
+| **Nacionalidades** con `sein` | Sie ist **Ecuadorianerin**. |
+| **Materiales / sustancias** en general | Ich trinke **Wasser**. |
+| **Plural indefinido** | Ich kaufe **Äpfel**. *(Compro manzanas.)* |
+
+> ⚠️ **Truco mental:** Si en español dirías *"un / una"* acompañado de profesión o nacionalidad después de "ser", en alemán **se elimina** el artículo.  
+> *"Soy un médico"* → `Ich bin Arzt.` (sin artículo)
+
+---
+
+### 4.4. Resumen visual rápido
+
+| Situación | Artículo | Ejemplo |
+|:---|:---:|:---|
+| Primera mención | `ein/eine` | Ich sehe **eine** Katze. |
+| Ya conocido / específico | `der/die/das` | **Die** Katze schläft. |
+| Profesión / nacionalidad con `sein` | `—` | Er ist **Arzt**. |
+| Sustancia / plural general | `—` | Ich esse **Brot**. |
 
 <style>
   /* --- ESTILOS PARA EL DIAGRAMA DE LLAVES --- */
